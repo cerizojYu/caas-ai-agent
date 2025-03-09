@@ -2,11 +2,14 @@ package clusteragent
 
 import (
 	"context"
+	"fmt"
 
+	"caas-ai-agent.ccsp.zte.com.cn/internal/consts"
 	"github.com/gin-gonic/gin"
 )
 
-func StartServer(ctx context.Context, addr string) error {
+func StartServer(ctx context.Context, listenPort int) error {
 	r := gin.Default()
-	return r.Run(addr)
+	r.GET(consts.ClusterAgentEventsURI, eventsListHandler)
+	return r.Run(fmt.Sprintf(":%d", listenPort))
 }
